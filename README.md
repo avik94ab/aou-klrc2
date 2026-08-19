@@ -29,6 +29,10 @@ cd aou-klrc2
 python nkc_extract.py --help
 ```
 
+While the repository is private the clone will ask for credentials: give your
+GitHub username and a personal access token with `repo` scope as the password,
+or make the repository public and it needs none.
+
 If the VM cannot reach GitHub, `nkc_extract.paste.sh` is the same script encoded
 as 205 lines of gzipped base64 that reconstruct the file and check its md5.
 Paste the whole thing into a terminal. Regenerate it after editing the script

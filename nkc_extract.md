@@ -27,6 +27,9 @@ git clone https://github.com/avik94ab/aou-klrc2.git
 cd aou-klrc2
 ```
 
+While the repository is private that clone asks for credentials: your GitHub
+username, and a personal access token with `repo` scope as the password.
+
 **If the VM cannot reach GitHub, paste it instead** (no laptop step, works in
 Verily and Terra). Open a terminal in the Workbench and paste the entire
 contents of `nkc_extract.paste.sh`, 205 lines of gzipped base64 that reconstruct
