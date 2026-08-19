@@ -33,10 +33,18 @@ While the repository is private the clone will ask for credentials: give your
 GitHub username and a personal access token with `repo` scope as the password,
 or make the repository public and it needs none.
 
-If the VM cannot reach GitHub, `nkc_extract.paste.sh` is the same script encoded
-as 205 lines of gzipped base64 that reconstruct the file and check its md5.
-Paste the whole thing into a terminal. Regenerate it after editing the script
-with `bash make_paste.sh > nkc_extract.paste.sh`.
+If the VM cannot reach GitHub, or you would rather not put a GitHub token inside
+a controlled environment, each script also ships as gzipped base64 that
+reconstructs the file and checks its md5: `nkc_extract.paste.sh` (205 lines) and
+`klrc2_cn.paste.sh` (130 lines). Paste one into a Workbench terminal and it
+writes the script out. This route needs no credentials at all.
+
+Regenerate them after editing either script:
+
+```bash
+bash make_paste.sh nkc_extract.py > nkc_extract.paste.sh
+bash make_paste.sh klrc2_cn.py    > klrc2_cn.paste.sh
+```
 
 ## Prerequisites
 
