@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+*.bam
+*.bam.bai
+*.fq.gz
+*.cram
+*.crai
+ref_cache/
+reads/
