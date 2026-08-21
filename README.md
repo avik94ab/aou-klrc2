@@ -29,9 +29,10 @@ cd aou-klrc2
 python nkc_extract.py --help
 ```
 
-While the repository is private the clone will ask for credentials: give your
-GitHub username and a personal access token with `repo` scope as the password,
-or make the repository public and it needs none.
+The repository is public, so that clone needs no credentials — no token, no
+`gh` login, nothing to configure. If it ever asks for a username and password,
+the repository has been flipped to private; make it public again, or supply a
+personal access token with `repo` scope as the password.
 
 If the VM cannot reach GitHub, or you would rather not put a GitHub token inside
 a controlled environment, each script also ships as gzipped base64 that

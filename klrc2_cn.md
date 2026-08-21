@@ -90,10 +90,53 @@ python klrc2_cn.py call depth.tsv calls.tsv --hist
 ```
 
 `manifest.tsv` needs a `sample` column and a `cram` (or `cram_url`) column.
+`person_id` and `research_id` are accepted for the first, `cram_uri` and `path`
+for the second, so a Workbench query result can go in mostly untouched.
+
+Two flags are worth setting explicitly on All of Us:
+
+    --user-project $GOOGLE_PROJECT
+
+`nkc_extract.py` defaults this to `$GOOGLE_PROJECT`; `klrc2_cn.py` does **not**,
+it defaults to empty. On a requester-pays bucket the omission shows up as reads
+failing with a 400 rather than as anything mentioning billing.
+
+    call ... --window clean --calibration none
+
+For a pilot of a few hundred samples, skip the fitted calibration entirely. The
+fit needs at least 50 samples and will run at 100, but with a deletion allele
+frequency near 0.2 that leaves roughly 32 one-copy samples to find a mode in,
+which is thin. The trimmed window needs no calibration at all, so fitting buys
+nothing at that size. Pass `--hist` anyway and check the fitted line comes out
+near `a ~ 0, b ~ 1` as a free sanity check.
 
 Results are appended as each sample lands, so a killed job keeps its work and
 re-running skips what is already done. Samples that failed are retried on resume;
 samples that succeeded are not.
+
+## Verified against the full 1000 Genomes cohort
+
+Re-measured 2026-08-21 from the staged NKC slices, independently of the original
+run, and compared per sample against the published calls:
+
+| check | result |
+|---|---|
+| KLRC2 reads per base vs published `target_depth` | exact, 3,197/3,197 |
+| copy number vs published `cn` | **3,197/3,197 (100%)** |
+| copy number vs HPRC assembly truth | 222/223, matching the published figure |
+| trimmed-window CN0 cluster | 0.002 +/- 0.002 (n=145) |
+
+All four calling variants agree on every sample: the published affine
+calibration, the unsupervised mode fit, the trimmed window with no calibration,
+and a single-normaliser variant. The trimmed window with `--calibration none` is
+therefore the recommended default, and the one with the fewest moving parts.
+
+One caveat carried over from that run: 383 of the 3,197 published `ratio` values
+were computed from a *degraded* control set, because `sorted(ok)[len(ok)//2]`
+silently becomes the maximum when a remote control query fails. No copy number
+changed, and `target_depth` is unaffected, but do not expect published
+`control_depth` or `ratio` to be byte-reproducible. This is also why `measure`
+retries: a control lost to a network reset quietly changes the normaliser.
 
 ## Things this handles that are easy to miss
 

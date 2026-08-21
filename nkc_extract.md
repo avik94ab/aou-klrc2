@@ -27,8 +27,9 @@ git clone https://github.com/avik94ab/aou-klrc2.git
 cd aou-klrc2
 ```
 
-While the repository is private that clone asks for credentials: your GitHub
-username, and a personal access token with `repo` scope as the password.
+The repository is public, so that clone needs no credentials. If it asks for a
+username and password, the repository has been flipped to private; supply a
+personal access token with `repo` scope as the password, or make it public.
 
 **If the VM cannot reach GitHub, paste it instead** (no laptop step, works in
 Verily and Terra). Open a terminal in the Workbench and paste the entire
